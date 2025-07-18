@@ -74,13 +74,13 @@
   </style>
 </head>
 <body>
-  <h1>Malla Curricular - Actuario (UBA)</h1>
-  <div class="grid" id="curriculum">
-    <!-- Las columnas se agregan dinámicamente -->
+  <h1>Malla Curricular Actuario</h1>
+  <div class="grid" id="malla">
+    <!-- columnas dinámicas -->
   </div>
 
   <script>
-    const curriculumData = {
+    const subjects = {
       "CBC": [
         "Álgebra",
         "Análisis Contable",
@@ -96,31 +96,86 @@
         { name: "Matemática Aplicada", requires: ["CBC"] },
         { name: "Sistemas Administrativos", requires: ["CBC"] }
       ],
-      "Ciclo Profesional": [
+      "Tercer Año": [
         "Administración Financiera",
-        "Análisis Estadístico II",
+        { name: "Análisis Estadístico II", requires: ["Análisis Estadístico"] },
         "Análisis Numérico",
         "Biometría Actuarial",
         "Computación Científica Actuarial",
-        "Dinero y bancos",
+        "Dinero y bancos"
+      ],
+      "Cuarto Año": [
         "Estadística actuarial",
-        "Matemática Aplicada II",
+        { name: "Matemática Aplicada II", requires: ["Matemática Aplicada"] },
         "Matemática financiera y actuarial",
         "Microeconomía para economistas",
         "Modelos y Proyecciones Actuariales",
-        "Práctica Profesional del Actuario",
-        "Teoría Actuarial de los seguros personales (Act 1)",
-        "Teoría Actuarial de los seguros patrimoniales (Act 2)",
-        "Teoría del equilibrio actuarial (Act 3)",
-        "Teoría Actuarial de los fondos y Planes de Jubilaciones, Pensiones y Salud (Act 4)",
-        "Bases Actuariales de las Inversiones y financiaciones (Act 5)"
+        "Práctica Profesional del Actuario"
+      ],
+      "Quinto Año": [
+        { name: "Teoría Actuarial de los seguros personales", requires: ["Estadística actuarial"] },
+        { name: "Teoría Actuarial de los seguros patrimoniales", requires: ["Teoría Actuarial de los seguros personales"] },
+        { name: "Teoría del equilibrio actuarial", requires: ["Teoría Actuarial de los seguros patrimoniales"] },
+        { name: "Teoría Actuarial de los fondos y Planes de Jubilaciones, Pensiones y Salud", requires: ["Teoría del equilibrio actuarial"] },
+        { name: "Bases Actuariales de las Inversiones y financiaciones", requires: ["Teoría Actuarial de los fondos y Planes de Jubilaciones, Pensiones y Salud"] }
       ]
     };
 
-    const completedSubjects = JSON.parse(localStorage.getItem("completedSubjects") || "[]");
+    const completed = new Set(JSON.parse(localStorage.getItem("aprobadas") || "[]"));
 
-    function isCompleted(name) {
-      return completedSubjects.includes(name);
+    const allSubjects = {};
+
+    function render() {
+      const malla = document.getElementById("malla");
+      malla.innerHTML = "";
+
+      for (const ciclo in subjects) {
+        const col = document.createElement("div");
+        col.className = "column";
+        col.innerHTML = `<h2>${ciclo}</h2>`;
+
+        for (const s of subjects[ciclo]) {
+          const name = typeof s === "string" ? s : s.name;
+          const requires = typeof s === "string" ? [] : s.requires;
+
+          const div = document.createElement("div");
+          div.className = "subject";
+          div.textContent = name;
+
+          const isCompleted = completed.has(name);
+          const unmet = requires.filter(req => {
+            if (req === "CBC") {
+              return subjects["CBC"].some(c => !completed.has(c));
+            }
+            return !completed.has(req);
+          });
+
+          if (isCompleted) div.classList.add("completed");
+          if (unmet.length > 0 && !isCompleted) {
+            div.classList.add("locked");
+            div.dataset.tooltip = "Requiere: " + unmet.join(", ");
+          }
+
+          div.addEventListener("click", () => {
+            if (div.classList.contains("locked")) return;
+            if (div.classList.contains("completed")) {
+              completed.delete(name);
+            } else {
+              completed.add(name);
+            }
+            localStorage.setItem("aprobadas", JSON.stringify([...completed]));
+            render();
+          });
+
+          allSubjects[name] = div;
+          col.appendChild(div);
+        }
+
+        malla.appendChild(col);
+      }
     }
 
-    function isUnlocked(subject
+    render();
+  </script>
+</body>
+</html>
