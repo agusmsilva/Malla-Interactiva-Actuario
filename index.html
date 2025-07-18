@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Malla Curricular - Actuario</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f2f6fc;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #2c3e50;
+    }
+    .grid {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .column {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1rem;
+      width: 280px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .column h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #2980b9;
+      text-align: center;
+    }
+    .subject {
+      padding: 0.5rem 1rem;
+      margin: 0.4rem 0;
+      border-radius: 6px;
+      background-color: #ecf0f1;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .subject:hover {
+      background-color: #d0e4f7;
+    }
+    .subject.completed {
+      background-color: #a2e4b8;
+      text-decoration: line-through;
+      color: #2d7d4d;
+    }
+    .subject.locked {
+      background-color: #e6e6e6;
+      color: #999;
+      cursor: not-allowed;
+    }
+    .subject.locked:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 105%;
+      top: 0;
+      white-space: pre;
+      background: #333;
+      color: #fff;
+      padding: 0.4rem;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <h1>Malla Curricular - Actuario (UBA)</h1>
+  <div class="grid" id="curriculum">
+    <!-- Las columnas se agregan dinámicamente -->
+  </div>
+
+  <script>
+    const curriculumData = {
+      "CBC": [
+        "Álgebra",
+        "Análisis Contable",
+        "Análisis Matemático I",
+        "Economía",
+        "Historia Económica y Social General",
+        "Instituciones de Gobierno y Economía Política"
+      ],
+      "Segundo Tramo": [
+        { name: "Análisis Estadístico", requires: ["CBC"] },
+        { name: "Derecho Empresarial", requires: ["CBC"] },
+        { name: "Macroeconomía I", requires: ["CBC"] },
+        { name: "Matemática Aplicada", requires: ["CBC"] },
+        { name: "Sistemas Administrativos", requires: ["CBC"] }
+      ],
+      "Ciclo Profesional": [
+        "Administración Financiera",
+        "Análisis Estadístico II",
+        "Análisis Numérico",
+        "Biometría Actuarial",
+        "Computación Científica Actuarial",
+        "Dinero y bancos",
+        "Estadística actuarial",
+        "Matemática Aplicada II",
+        "Matemática financiera y actuarial",
+        "Microeconomía para economistas",
+        "Modelos y Proyecciones Actuariales",
+        "Práctica Profesional del Actuario",
+        "Teoría Actuarial de los seguros personales (Act 1)",
+        "Teoría Actuarial de los seguros patrimoniales (Act 2)",
+        "Teoría del equilibrio actuarial (Act 3)",
+        "Teoría Actuarial de los fondos y Planes de Jubilaciones, Pensiones y Salud (Act 4)",
+        "Bases Actuariales de las Inversiones y financiaciones (Act 5)"
+      ]
+    };
+
+    const completedSubjects = JSON.parse(localStorage.getItem("completedSubjects") || "[]");
+
+    function isCompleted(name) {
+      return completedSubjects.includes(name);
+    }
+
+    function isUnlocked(subject
