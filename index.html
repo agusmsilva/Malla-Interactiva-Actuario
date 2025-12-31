@@ -82,42 +82,43 @@
   <script>
     const subjects = {
       "CBC": [
-        "Álgebra",
-        "Análisis Contable",
-        "Análisis Matemático I",
-        "Economía",
-        "Historia Económica y Social General",
-        "Instituciones de Gobierno y Economía Política"
+        "Álgebra (245)",
+        "Análisis Contable (255)",
+        "Análisis Matemático I (241)",
+        "Economía (242)",
+        "Historia Económica y Social General (246)",
+        "Instituciones de Gobierno y Economía Política (256)"
       ],
       "Segundo Tramo": [
-        { name: "Análisis Estadístico", requires: ["CBC"] },
-        { name: "Derecho Empresarial", requires: ["CBC"] },
-        { name: "Macroeconomía I", requires: ["CBC"] },
-        { name: "Matemática Aplicada", requires: ["CBC"] },
-        { name: "Sistemas Administrativos", requires: ["CBC"] }
+        { name: "Análisis Estadístico I (540)", requires: ["CBC"] },
+        { name: "Derecho Empresarial (462)", requires: ["CBC"] },
+        { name: "Macroeconomía I (262)", requires: ["CBC"] },
+        { name: "Matemática Aplicada I (542)", requires: ["CBC"] },
+        { name: "Sistemas Administrativos (274)", requires: ["CBC"] },
       ],
       "Tercer Año": [
-        "Administración Financiera",
-        { name: "Análisis Estadístico II", requires: ["Análisis Estadístico"] },
-        "Análisis Numérico",
-        "Biometría Actuarial",
-        "Computación Científica Actuarial",
-        "Dinero y bancos"
+        { name: "Matemática Aplicada II (544)", requires: ["Matemática Aplicada"] },
+        { name: "Microeconomía para economistas (291)", requires: ["Matemática Aplicada I"] },
+        { name: "Derecho Financiero, Seguros y Seguridad Social", requires: ["Derecho Empresarial"] },
+        { name: "Análisis Estadístico II (602)", requires: ["Análisis Estadístico I", "Matemática Aplicada I"] },
+        { name: "Administración Financiera (279)", requires: ["Análisis Estadístico II"] }, 
+        { name: "Análisis Numérico (752)", requires: ["Matemática Aplicada II"] },
+        { name: "Computación Científica Actuarial (746)", requires: ["Análisis Estadístico I", "Matemática Aplicada I"] },
       ],
       "Cuarto Año": [
-        "Estadística actuarial",
-        { name: "Matemática Aplicada II", requires: ["Matemática Aplicada"] },
-        "Matemática financiera y actuarial",
-        "Microeconomía para economistas",
-        "Modelos y Proyecciones Actuariales",
-        "Práctica Profesional del Actuario"
+        { name: "Matemática financiera y actuarial (601)", requires: ["Análisis Estadístico I", "Matemática Aplicada I"] },
+        { name: "Dinero y bancos (548)", requires: ["Administración Financiera", "Análisis Estadístico II"] },
+        { name: "Estadística actuarial (751)", requires: ["Matemática Aplicada II", "Análisis Estadístico II"] },
+        { name: "Biometría Actuarial (753)", requires: ["Matemática Financiera y Actuarial", "Estadística Actuarial", "Análisis Numérico"] },
+        { name: "Teoría Actuarial de los seguros personales (754)", requires: ["Biometría Actuarial"] },
+        { name: "Teoría Actuarial de los seguros patrimoniales (755)", requires: ["Matemática Financiera y Actuarial", "Estadística Actuarial", "Análisis Numérico"] },
       ],
       "Quinto Año": [
-        { name: "Teoría Actuarial de los seguros personales", requires: ["Estadística actuarial"] },
-        { name: "Teoría Actuarial de los seguros patrimoniales", requires: ["Teoría Actuarial de los seguros personales"] },
-        { name: "Teoría del equilibrio actuarial", requires: ["Teoría Actuarial de los seguros patrimoniales"] },
-        { name: "Teoría Actuarial de los fondos y Planes de Jubilaciones, Pensiones y Salud", requires: ["Teoría del equilibrio actuarial"] },
-        { name: "Bases Actuariales de las Inversiones y financiaciones", requires: ["Teoría Actuarial de los fondos y Planes de Jubilaciones, Pensiones y Salud"] }
+        { name: "Bases Actuariales de las Inversiones y financiaciones (758)", requires: ["Matemática Financiera y Actuarial", "Estadística Actuarial"] },
+        { name: "Teoría Actuarial de los fondos y Planes de Jubilaciones, Pensiones y Salud (756)", requires: ["Teoría Actuarial de los seguros personales"] },
+        { name: "Teoría del equilibrio actuarial (757)", requires: ["Teoría Actuarial de los seguros personales", "Teoría Actuarial de los seguros patrimoniales"] },
+        { name: "Modelos y Proyecciones Actuariales (717)", requires: ["Computación Científica Actuarial", "Teoría de Equilibrio Actuarial", "Bases Actuariales de las Inversiones y financiaciones"] }, 
+        { name: "Práctica Profesional del Actuario (728)", requires: ["Teoría Actuarial de los Seguros personales", "Teoría Actuarial de los Seguros patrimoniales", "Teoría Actuarial de los fondos y Planes de Jubilaciones, Pensiones y Salud"] },
       ]
     };
 
